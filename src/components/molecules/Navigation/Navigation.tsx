@@ -32,9 +32,11 @@ export function Navigation({ className = "" }: NavigationProps) {
             const span = activeLink.querySelector('span');
             const spanRect = span ? span.getBoundingClientRect() : activeLink.getBoundingClientRect();
 
+            // Add extra width and right-align the underline
+            const extraWidth = spanRect.width * 3;
             setUnderlineStyle({
-                left: spanRect.left - navRect.left,
-                width: spanRect.width,
+                left: spanRect.left - navRect.left - extraWidth,
+                width: spanRect.width + extraWidth,
             });
         }
     };
