@@ -130,6 +130,11 @@ export function Navigation({ className = "" }: NavigationProps) {
                     </li>
                 ))}
 
+                {/* Background track line */}
+                <span
+                    className="absolute bottom-1 left-0 right-0 h-[2px] bg-gray-100 rounded-full"
+                />
+
                 {/* Sliding underline */}
                 <span
                     className="absolute bottom-1 h-[2px] bg-black rounded-full"
