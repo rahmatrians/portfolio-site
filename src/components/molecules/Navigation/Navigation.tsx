@@ -1,7 +1,6 @@
 "use client";
 
 import { Logo } from "@/components/atoms/Logo";
-import { NavLink } from "@/components/atoms/NavLink";
 import { siteConfig } from "@/config/site";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
@@ -108,7 +107,7 @@ export function Navigation({ className = "" }: NavigationProps) {
     }, []);
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 flex items-start justify-between w-full px-56 pt-6 backdrop-blur-md bg-white/70 border-b border-white/20 ${className}`}>
+        <nav className={`fixed top-0 left-0 right-0 z-50 flex items-start justify-between w-full px-56 pt-6 backdrop-blur-md bg-white/60 ${className}`}>
             <Logo />
 
             <ul ref={navRef} className="flex items-center gap-14 pt-2 relative">
@@ -132,12 +131,12 @@ export function Navigation({ className = "" }: NavigationProps) {
 
                 {/* Background track line */}
                 <span
-                    className="absolute bottom-1 left-0 right-0 h-[2px] bg-gray-100 rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-100 rounded-full"
                 />
 
                 {/* Sliding underline */}
                 <span
-                    className="absolute bottom-1 h-[2px] bg-black rounded-full"
+                    className="absolute bottom-0 h-[2px] bg-black rounded-full"
                     style={{
                         left: underlineStyle.left,
                         width: underlineStyle.width,
