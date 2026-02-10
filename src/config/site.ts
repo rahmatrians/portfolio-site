@@ -27,7 +27,7 @@ export const siteConfig = {
 
   // Avatar/Profile Image
   avatar: {
-    src: "/images/avatar.png", // Replace with actual avatar path
+    src: "/images/avatar.svg", // Replace with actual avatar path
     alt: "Profile avatar",
   },
 

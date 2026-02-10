@@ -7,7 +7,7 @@ export const revalidate = 60;
 
 export default function HomePage() {
   return (
-    <MainLayout>
+    <MainLayout className="md:px-32">
       <div id="home">
         <HeroSection />
       </div>

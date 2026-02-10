@@ -108,7 +108,7 @@ export function Navigation({ className = "" }: NavigationProps) {
     }, []);
 
     return (
-        <nav className={`flex items-start justify-between w-full ${className}`}>
+        <nav className={`fixed top-0 left-0 right-0 z-50 flex items-start justify-between w-full px-56 pt-6 backdrop-blur-md bg-white/70 border-b border-white/20 ${className}`}>
             <Logo />
 
             <ul ref={navRef} className="flex items-center gap-14 pt-2 relative">
