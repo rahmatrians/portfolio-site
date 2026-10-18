@@ -157,12 +157,12 @@ export function ClientSection({ className = "" }: ClientSectionProps) {
     >
       {/* Horizontal marquee container with side fade gradient (matching CLIENT.png) */}
       <div className="relative w-full space-y-8">
-        {/* Left and right fade gradient mask to match Figma screenshot */}
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-linear-to-r from-white via-white/80 to-transparent z-10" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-linear-to-l from-white via-white/80 to-transparent z-10" />
-
         {/* Row 1: Left to right / right to left infinite marquee */}
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden relative">
+          {/* Left and right fade gradient mask to match Figma screenshot */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-linear-to-r from-white via-white/80 to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-linear-to-l from-white via-white/80 to-transparent z-10" />
+
           <div className="animate-marquee flex items-center gap-8">
             {ROW_ONE_LOGOS.map((logo, index) => (
               <ClientLogoItem
@@ -196,7 +196,11 @@ export function ClientSection({ className = "" }: ClientSectionProps) {
         </div>
 
         {/* Row 2: Reverse direction marquee */}
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden relative">
+          {/* Left and right fade gradient mask to match Figma screenshot */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-linear-to-r from-white via-white/80 to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-linear-to-l from-white via-white/80 to-transparent z-10" />
+
           <div className="animate-marquee-reverse flex items-center gap-8">
             {ROW_TWO_LOGOS.map((logo, index) => (
               <ClientLogoItem
