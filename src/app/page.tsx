@@ -1,5 +1,6 @@
 import { MainLayout } from "@/components/templates/MainLayout";
 import { HeroSection } from "@/components/organisms/HeroSection";
+import { ClientSection } from "@/components/organisms/ClientSection";
 import { AboutSection } from "@/components/organisms/AboutSection";
 
 // ISR - Revalidate every 60 seconds
@@ -12,6 +13,7 @@ export default function HomePage() {
         <HeroSection />
       </div>
       <AboutSection />
+      <ClientSection />
     </MainLayout>
   );
 }
