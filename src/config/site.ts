@@ -9,6 +9,15 @@ export interface ProjectItem {
   stack: string[];
 }
 
+// A single contact entry in the Contact section
+export interface ContactLink {
+  label: string;
+  // Text shown to the user
+  value: string;
+  // mailto: or https: URL
+  href: string;
+}
+
 // Site configuration - Easy to update personal information
 export const siteConfig = {
   // Personal Info
@@ -52,12 +61,17 @@ export const siteConfig = {
     siteUrl: "https://yourportfolio.com", // Replace with actual URL
   },
 
-  // Social Links (for future use)
-  social: {
-    github: "https://github.com/yourusername",
-    linkedin: "https://linkedin.com/in/yourusername",
-    twitter: "https://twitter.com/yourusername",
-    email: "your.email@example.com",
+  // Contact Section - replace placeholders with real links
+  contact: {
+    titleAccent: "Get",
+    titleMain: "in Touch",
+    subtitle: "Hit me up, below!",
+    links: [
+      { label: "Email", value: "justsample@email.com", href: "mailto:justsample@email.com" },
+      { label: "github", value: "github.com/namehere", href: "https://github.com/namehere" },
+      { label: "linkedin", value: "linked.in/@namehere", href: "https://linkedin.com/in/namehere" },
+      { label: "instagram", value: "instagram.com/@namehere", href: "https://instagram.com/namehere" },
+    ] as ContactLink[],
   },
 
   // About Section
