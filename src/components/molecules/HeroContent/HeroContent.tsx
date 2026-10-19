@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/atoms/LinkButton";
 import { siteConfig } from "@/config/site";
 
 interface HeroContentProps {
@@ -23,16 +22,12 @@ export function HeroContent({ className = "" }: HeroContentProps) {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-4 mt-4">
-                <Button asChild size="lg" className="rounded-xl pr-14 py-auto">
-                    <Link className="text-left" href={siteConfig.cta.primary.href}>
-                        {siteConfig.cta.primary.label}
-                    </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="rounded-xl pr-14 py-auto border-black">
-                    <Link href={siteConfig.cta.secondary.href}>
-                        {siteConfig.cta.secondary.label}
-                    </Link>
-                </Button>
+                <LinkButton href={siteConfig.cta.primary.href}>
+                    {siteConfig.cta.primary.label}
+                </LinkButton>
+                <LinkButton href={siteConfig.cta.secondary.href} variant="outline">
+                    {siteConfig.cta.secondary.label}
+                </LinkButton>
             </div>
         </div>
     );

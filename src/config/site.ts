@@ -1,3 +1,14 @@
+// A single project card in the Projects section
+export interface ProjectItem {
+  title: string;
+  category: string;
+  href: string;
+  // Optional thumbnail path (e.g. "/images/projects/foo.png"); gray placeholder if omitted
+  image?: string;
+  // Tech stack names, rendered as overlapping dots (first 3 shown)
+  stack: string[];
+}
+
 // Site configuration - Easy to update personal information
 export const siteConfig = {
   // Personal Info
@@ -62,6 +73,79 @@ export const siteConfig = {
       label: "Download CV",
       href: "/cv.pdf", // Replace with actual CV path
     },
+  },
+
+  // Projects Section
+  projects: {
+    titleAccent: "Explore",
+    titleMain: "my Projects",
+    subtitle: "Lorem Ipsum",
+    // Number of cards visible before the "show more" arrow is pressed
+    initialCount: 8,
+    seeLabel: "See",
+    // Replace with real projects
+    items: [
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+      {
+        title: "This it Title",
+        category: "Category Project",
+        href: "#",
+        stack: ["Tech A", "Tech B", "Tech C"],
+      },
+    ] as ProjectItem[],
   },
 };
 
