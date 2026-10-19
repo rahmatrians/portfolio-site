@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BackNavigation } from "@/components/molecules/BackNavigation";
+import { ContactSection } from "@/components/organisms/ContactSection";
 import { ProjectDetail } from "@/components/organisms/ProjectDetail";
 import { MainLayout } from "@/components/templates/MainLayout";
 import { getProjectBySlug, projects } from "@/config/projects";
@@ -34,6 +35,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <MainLayout navigation={<BackNavigation label={back.label} href={back.href} />}>
       <ProjectDetail project={project} />
+      <ContactSection />
     </MainLayout>
   );
 }

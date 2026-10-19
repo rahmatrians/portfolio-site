@@ -91,7 +91,7 @@ export const siteConfig = {
   // Project detail page (/projects/[slug])
   projectDetail: {
     back: { label: "Projects", href: "/#projects" },
-    hire: { label: "Hire me", href: "/#contact" },
+    hire: { label: "Hire me", href: "#contact" },
     stackLabel: "Tech Stacks",
   },
 };
