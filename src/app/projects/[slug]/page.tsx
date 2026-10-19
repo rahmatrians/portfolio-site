@@ -32,10 +32,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const { back } = siteConfig.projectDetail;
 
   return (
-    <MainLayout
-      navigation={<BackNavigation label={back.label} href={back.href} />}
-      showFooter={false}
-    >
+    <MainLayout navigation={<BackNavigation label={back.label} href={back.href} />}>
       <ProjectDetail project={project} />
     </MainLayout>
   );

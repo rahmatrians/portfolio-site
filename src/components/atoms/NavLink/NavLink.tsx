@@ -9,13 +9,22 @@ interface NavLinkProps {
     className?: string;
     isActive: boolean;
     onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+    "aria-label"?: string;
 }
 
-export function NavLink({ href, children, className = "", isActive, onClick }: NavLinkProps) {
+export function NavLink({
+    href,
+    children,
+    className = "",
+    isActive,
+    onClick,
+    "aria-label": ariaLabel,
+}: NavLinkProps) {
     return (
         <Link
             href={href}
             onClick={onClick}
+            aria-label={ariaLabel}
             className={cn(
                 "relative text-sm transition-colors",
                 isActive
