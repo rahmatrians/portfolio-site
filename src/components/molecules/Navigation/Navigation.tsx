@@ -2,6 +2,7 @@
 
 import { Logo } from "@/components/atoms/Logo";
 import { siteConfig } from "@/config/site";
+import { smoothScrollTo } from "@/lib/smooth-scroll";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface NavigationProps {
@@ -47,14 +48,8 @@ export function Navigation({ className = "" }: NavigationProps) {
     e.preventDefault();
     setActiveSection(href);
 
-    // Update URL hash
-    window.history.pushState(null, "", href);
-
-    // Try to scroll to section if it exists
-    const section = document.querySelector(href);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+    // Eased scroll (also updates the URL hash)
+    smoothScrollTo(href);
   };
 
   // Update underline when active section changes

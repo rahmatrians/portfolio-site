@@ -41,7 +41,7 @@ export const siteConfig = {
     },
     secondary: {
       label: "Explore more",
-      href: "#projects",
+      href: "#about",
     },
   },
 

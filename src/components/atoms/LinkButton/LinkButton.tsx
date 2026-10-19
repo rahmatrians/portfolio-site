@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ScrollLink } from "@/components/atoms/ScrollLink";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -30,9 +30,9 @@ export function LinkButton({
         className
       )}
     >
-      <Link href={href} aria-label={ariaLabel} className="text-left">
+      <ScrollLink href={href} aria-label={ariaLabel} className="text-left">
         {children}
-      </Link>
+      </ScrollLink>
     </Button>
   );
 }

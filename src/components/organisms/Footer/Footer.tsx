@@ -12,7 +12,7 @@ export function Footer({ className }: FooterProps) {
       <p className="sr-only">
         © {new Date().getFullYear()} {siteConfig.name}
       </p>
-      <div aria-hidden="true" className="flex h-[15px] w-full">
+      <div aria-hidden="true" className="flex h-[12px] w-full">
         <span className="w-[16.25%] bg-[#C8C8C8]" />
         <span className="w-[22px] bg-[#999999]" />
         <span className="flex-1 bg-black" />
