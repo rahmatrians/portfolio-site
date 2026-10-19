@@ -1,6 +1,7 @@
 "use client";
 
-import { Logo } from "@/components/atoms/Logo";
+import { NavLine } from "@/components/atoms/NavLine";
+import { NavBar } from "@/components/molecules/NavBar";
 import { siteConfig } from "@/config/site";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -108,11 +109,7 @@ export function Navigation({ className = "" }: NavigationProps) {
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 flex items-start justify-between w-full px-56 pt-6 bg-white/60 backdrop-blur-md [-webkit-backdrop-filter:blur(12px)] transform-gpu ${className}`}
-    >
-      <Logo />
-
+    <NavBar className={className}>
       <ul ref={navRef} className="flex items-center gap-14 pt-2 relative">
         {siteConfig.navigation.map((item) => (
           <li key={item.href}>
@@ -132,11 +129,11 @@ export function Navigation({ className = "" }: NavigationProps) {
         ))}
 
         {/* Background track line */}
-        <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-100 rounded-full" />
+        <NavLine variant="track" />
 
         {/* Sliding underline */}
-        <span
-          className="absolute bottom-0 h-[2px] bg-black rounded-full"
+        <NavLine
+          variant="active"
           style={{
             left: underlineStyle.left,
             width: underlineStyle.width,
@@ -146,6 +143,6 @@ export function Navigation({ className = "" }: NavigationProps) {
           }}
         />
       </ul>
-    </nav>
+    </NavBar>
   );
 }

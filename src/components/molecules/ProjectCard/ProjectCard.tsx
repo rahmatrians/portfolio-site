@@ -1,11 +1,11 @@
-import Image from "next/image";
+import { ImageFrame } from "@/components/atoms/ImageFrame";
 import { LinkButton } from "@/components/atoms/LinkButton";
 import { StackDots } from "@/components/atoms/StackDots";
-import type { ProjectItem } from "@/config/site";
+import { getProjectHref, type Project } from "@/config/projects";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
-  project: ProjectItem;
+  project: Project;
   seeLabel?: string;
   className?: string;
 }
@@ -15,7 +15,7 @@ export function ProjectCard({
   seeLabel = "See",
   className,
 }: ProjectCardProps) {
-  const { title, category, href, image, stack } = project;
+  const { slug, title, category, gallery, stack } = project;
 
   return (
     <article
@@ -24,18 +24,12 @@ export function ProjectCard({
         className
       )}
     >
-      {/* Thumbnail (gray placeholder when no image is provided) */}
-      <div className="relative aspect-252/214 w-full overflow-hidden rounded-[13px] bg-[#D9D9D9]">
-        {image && (
-          <Image
-            src={image}
-            alt={`${title} preview`}
-            fill
-            sizes="(min-width: 1024px) 252px, (min-width: 640px) 45vw, 90vw"
-            className="object-cover"
-          />
-        )}
-      </div>
+      {/* Thumbnail (first gallery image, gray placeholder if none) */}
+      <ImageFrame
+        image={gallery[0]}
+        sizes="(min-width: 1024px) 252px, (min-width: 640px) 45vw, 90vw"
+        className="aspect-252/214 w-full rounded-[13px]"
+      />
 
       {/* Title + category */}
       <h3 className="mt-7 text-[20px] font-semibold leading-[1.4] text-black">
@@ -48,7 +42,7 @@ export function ProjectCard({
       {/* Stack dots + See button */}
       <div className="mt-auto flex items-center justify-between pt-12">
         <StackDots items={stack} />
-        <LinkButton href={href} aria-label={`${seeLabel} ${title}`}>
+        <LinkButton href={getProjectHref(slug)} aria-label={`${seeLabel} ${title}`}>
           {seeLabel}
         </LinkButton>
       </div>

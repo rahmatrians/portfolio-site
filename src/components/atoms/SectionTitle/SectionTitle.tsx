@@ -2,25 +2,28 @@ import { cn } from "@/lib/utils";
 import { textAlignClass, type TextAlign } from "@/lib/text-align";
 
 interface SectionTitleProps {
-  // First line (e.g. "Lil a bit", "Explore")
-  accent: string;
-  // Second line (e.g. "About me", "my Projects")
+  // Optional first line (e.g. "Lil a bit", "Explore"); omit for a one-line title
+  accent?: string;
+  // Main line (e.g. "About me", "my Projects", a project title)
   main: string;
+  // Heading level; use "h1" for a page's main title
+  as?: "h1" | "h2";
   align?: TextAlign;
   id?: string;
   className?: string;
 }
 
-// Two-line bold section heading shared by all page sections
+// Bold heading shared by page sections and the project detail title
 export function SectionTitle({
   accent,
   main,
+  as: Heading = "h2",
   align = "left",
   id,
   className,
 }: SectionTitleProps) {
   return (
-    <h2
+    <Heading
       id={id}
       className={cn(
         "text-4xl md:text-5xl font-bold font-poppins",
@@ -28,9 +31,13 @@ export function SectionTitle({
         className
       )}
     >
-      {accent}
-      <br />
+      {accent && (
+        <>
+          {accent}
+          <br />
+        </>
+      )}
       {main}
-    </h2>
+    </Heading>
   );
 }

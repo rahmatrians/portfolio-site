@@ -1,3 +1,4 @@
+import { BodyText } from "@/components/atoms/BodyText";
 import { LinkButton } from "@/components/atoms/LinkButton";
 import { SectionSubtitle } from "@/components/atoms/SectionSubtitle";
 import { SectionTitle } from "@/components/atoms/SectionTitle";
@@ -31,12 +32,9 @@ export function AboutContent({ className = "" }: AboutContentProps) {
       {/* Paragraphs - Justified */}
       <div className="space-y-6">
         {paragraphs.map((paragraph, index) => (
-          <p
-            key={index}
-            className="text-sm md:text-base font-medium font-poppins text-black text-justify leading-relaxed"
-          >
+          <BodyText key={index} justify>
             {paragraph}
-          </p>
+          </BodyText>
         ))}
       </div>
     </div>
