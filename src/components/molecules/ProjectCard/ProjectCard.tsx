@@ -2,6 +2,7 @@ import { ImageFrame } from "@/components/atoms/ImageFrame";
 import { LinkButton } from "@/components/atoms/LinkButton";
 import { StackDots } from "@/components/atoms/StackDots";
 import { getProjectHref, type Project } from "@/config/projects";
+import { cardSurfaceClass } from "@/lib/card";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
@@ -19,10 +20,7 @@ export function ProjectCard({
 
   return (
     <article
-      className={cn(
-        "flex flex-col rounded-[14px] border border-gray-100 bg-white p-7 font-poppins transition-shadow duration-300 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)]",
-        className
-      )}
+      className={cn(cardSurfaceClass, className)}
     >
       {/* Thumbnail (first gallery image, gray placeholder if none) */}
       <ImageFrame

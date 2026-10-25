@@ -1,5 +1,6 @@
 import { ImageFrame } from "@/components/atoms/ImageFrame";
 import type { Experience } from "@/config/site";
+import { cardSurfaceClass } from "@/lib/card";
 import { cn } from "@/lib/utils";
 
 interface ExperienceCardProps {
@@ -18,10 +19,7 @@ export function ExperienceCard({
 
   return (
     <article
-      className={cn(
-        "flex h-full flex-col rounded-[14px] border border-gray-100 bg-white p-7 font-poppins",
-        className
-      )}
+      className={cn(cardSurfaceClass, "h-full", className)}
     >
       {/* Logo + title/company */}
       <div className="flex items-center gap-5">
@@ -44,7 +42,7 @@ export function ExperienceCard({
       </div>
 
       {/* Location + period */}
-      <div className="mt-auto flex items-center justify-between gap-4 pt-6 text-[15px] leading-normal text-[#C8C8C8]">
+      <div className="mt-auto flex items-center justify-between gap-4 pt-6 text-[13px] leading-normal text-[#C8C8C8]">
         <span>{location}</span>
         <span className="shrink-0">{period}</span>
       </div>
