@@ -1,10 +1,15 @@
+import { SectionSubtitle } from "@/components/atoms/SectionSubtitle";
 import { AboutContent } from "@/components/molecules/AboutContent";
+import { ExperienceTimeline } from "@/components/molecules/ExperienceTimeline";
+import { siteConfig } from "@/config/site";
 
 interface AboutSectionProps {
     className?: string;
 }
 
 export function AboutSection({ className = "" }: AboutSectionProps) {
+    const { experience } = siteConfig.about;
+
     return (
         <section
             id="about"
@@ -21,6 +26,14 @@ export function AboutSection({ className = "" }: AboutSectionProps) {
                 </div> */}
                 {/* About Content */}
                 <AboutContent />
+
+                {/* Work Experience - between the intro paragraphs and the client marquee */}
+                <div className="mt-24 md:mt-32">
+                    <SectionSubtitle className="mb-12">
+                        {experience.title}
+                    </SectionSubtitle>
+                    <ExperienceTimeline items={experience.items} />
+                </div>
             </div>
         </section>
     );

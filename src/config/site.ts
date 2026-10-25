@@ -1,3 +1,5 @@
+import type { ProjectImage } from "./projects";
+
 // A single contact entry in the Contact section
 export interface ContactLink {
   label: string;
@@ -5,6 +7,17 @@ export interface ContactLink {
   value: string;
   // mailto: or https: URL
   href: string;
+}
+
+// A single job in the About > Work Experience timeline (newest first)
+export interface Experience {
+  jobTitle: string;
+  company: string;
+  location: string;
+  // Free-form range, e.g. "2022 - Present"
+  period: string;
+  // Company logo under /public; gray placeholder if omitted
+  logo?: ProjectImage;
 }
 
 // Site configuration - Easy to update personal information
@@ -42,10 +55,15 @@ export const siteConfig = {
 
   // SEO
   seo: {
-    title: "Portfolio - Software Engineer",
+    title: "Portfolio - Rahmat Riansyah",
     description:
       "Professional portfolio website showcasing projects and skills as a Software Engineer.",
-    keywords: ["software engineer", "portfolio", "developer", "web development"],
+    keywords: [
+      "software engineer",
+      "portfolio",
+      "developer",
+      "web development",
+    ],
     ogImage: "/images/og-image.png",
     siteUrl: "https://yourportfolio.com", // Replace with actual URL
   },
@@ -56,10 +74,26 @@ export const siteConfig = {
     titleMain: "in Touch",
     subtitle: "Hit me up, below!",
     links: [
-      { label: "Email", value: "justsample@email.com", href: "mailto:justsample@email.com" },
-      { label: "github", value: "github.com/namehere", href: "https://github.com/namehere" },
-      { label: "linkedin", value: "linked.in/@namehere", href: "https://linkedin.com/in/namehere" },
-      { label: "instagram", value: "instagram.com/@namehere", href: "https://instagram.com/namehere" },
+      {
+        label: "Email",
+        value: "justsample@email.com",
+        href: "mailto:justsample@email.com",
+      },
+      {
+        label: "github",
+        value: "github.com/namehere",
+        href: "https://github.com/namehere",
+      },
+      {
+        label: "linkedin",
+        value: "linked.in/@namehere",
+        href: "https://linkedin.com/in/namehere",
+      },
+      {
+        label: "instagram",
+        value: "instagram.com/@namehere",
+        href: "https://instagram.com/namehere",
+      },
     ] as ContactLink[],
   },
 
@@ -75,6 +109,42 @@ export const siteConfig = {
     cvButton: {
       label: "Download CV",
       href: "/cv.pdf", // Replace with actual CV path
+    },
+    // Work Experience timeline - replace placeholders with real jobs
+    experience: {
+      title: "Work Experience",
+      items: [
+        {
+          jobTitle: "Job Title",
+          company: "Company Name",
+          location: "City, Country",
+          period: "20XX - 20XX",
+        },
+        {
+          jobTitle: "Job Title",
+          company: "Company Name",
+          location: "City, Country",
+          period: "20XX - 20XX",
+        },
+        {
+          jobTitle: "Job Title",
+          company: "Company Name",
+          location: "City, Country",
+          period: "20XX - 20XX",
+        },
+        {
+          jobTitle: "Job Title",
+          company: "Company Name",
+          location: "City, Country",
+          period: "20XX - 20XX",
+        },
+        {
+          jobTitle: "Job Title",
+          company: "Company Name",
+          location: "City, Country",
+          period: "20XX - 20XX",
+        },
+      ] as Experience[],
     },
   },
 
