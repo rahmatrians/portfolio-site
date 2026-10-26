@@ -19,7 +19,7 @@ const UNDERLINE_TRANSITION =
 // The first menu's underline is 4x its label; menus further right are wider
 // by these amounts (relative to that base width). Moving left reverses it.
 const BASE_WIDTH_MULTIPLIER = 4;
-const WIDTH_GROWTH = [0, 0.1, 0.25, 0.6];
+const WIDTH_GROWTH = [0, 0.35, 0.6, 0.9];
 
 export function Navigation({ className = "" }: NavigationProps) {
   const [activeSection, setActiveSection] = useState("#home");
