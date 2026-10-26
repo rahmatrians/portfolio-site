@@ -30,10 +30,10 @@ const buttonVariants = cva(
         "icon-lg": "size-10",
       },
       // Liquid dual-wave hover + elastic click compress (see atoms/LiquidWave).
-      // isolate/overflow-hidden contain the blend layer to the button;
+      // isolate contains the blend layer (which clips itself) to the button;
       // press squashes fast, release springs back with overshoot.
       liquid: {
-        true: "relative isolate overflow-hidden transition-[scale,color,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.34,1.8,0.64,1)] active:scale-x-92 active:scale-y-84 active:duration-100 active:ease-out",
+        true: "relative isolate transition-[scale,color,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.34,1.8,0.64,1)] active:scale-x-92 active:scale-y-84 active:duration-100 active:ease-out",
         false: "",
       },
     },
