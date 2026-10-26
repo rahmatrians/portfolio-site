@@ -4,108 +4,106 @@ import { NavLine } from "@/components/atoms/NavLine";
 import { NavBar } from "@/components/molecules/NavBar";
 import { siteConfig } from "@/config/site";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface NavigationProps {
   className?: string;
 }
 
+const SECTIONS = siteConfig.navigation.map((item) => item.href);
+// Distance below the viewport top that counts as "inside" a section
+const SPY_OFFSET = 100;
+// Underline glide: long, soft deceleration
+const UNDERLINE_TRANSITION =
+  "transform 600ms cubic-bezier(0.22, 1, 0.36, 1), width 600ms cubic-bezier(0.22, 1, 0.36, 1)";
+
 export function Navigation({ className = "" }: NavigationProps) {
   const [activeSection, setActiveSection] = useState("#home");
-  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
-  const [mounted, setMounted] = useState(false);
+  const [underline, setUnderline] = useState({ x: 0, width: 0 });
+  const [animate, setAnimate] = useState(false);
   const navRef = useRef<HTMLUListElement>(null);
   const linksRef = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  // True while a nav-click scroll runs, so the scroll spy can't drag the
+  // underline through every section in between
+  const isAutoScrolling = useRef(false);
 
-  // Register link refs
   const setLinkRef = (href: string) => (el: HTMLAnchorElement | null) => {
-    if (el) {
-      linksRef.current.set(href, el);
-    }
+    if (el) linksRef.current.set(href, el);
   };
 
-  // Update underline position - accepts optional section to avoid stale closure
-  const updateUnderline = (section?: string) => {
-    const targetSection = section || activeSection;
-    const activeLink = linksRef.current.get(targetSection);
-    if (activeLink && navRef.current) {
-      const navRect = navRef.current.getBoundingClientRect();
-      const span = activeLink.querySelector("span");
-      const spanRect = span
-        ? span.getBoundingClientRect()
-        : activeLink.getBoundingClientRect();
+  // Underline is right-aligned to the label and 4x its width
+  const measure = useCallback((section: string) => {
+    const label = linksRef.current.get(section)?.querySelector("span");
+    const nav = navRef.current;
+    if (!label || !nav) return;
 
-      // Add extra width and right-align the underline
-      const extraWidth = spanRect.width * 3;
-      setUnderlineStyle({
-        left: spanRect.left - navRect.left - extraWidth,
-        width: spanRect.width + extraWidth,
-      });
-    }
-  };
-
-  // Handle click on nav link
-  const handleClick = (href: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    setActiveSection(href);
-
-    // Eased scroll (also updates the URL hash)
-    smoothScrollTo(href);
-  };
-
-  // Update underline when active section changes
-  useLayoutEffect(() => {
-    if (mounted) {
-      updateUnderline();
-    }
-  }, [activeSection, mounted]);
-
-  // Initial mount - read hash and setup
-  useEffect(() => {
-    // Read hash from URL
-    const hash = window.location.hash;
-    const initialSection =
-      hash && ["#home", "#about", "#projects", "#contact"].includes(hash)
-        ? hash
-        : "#home";
-
-    setActiveSection(initialSection);
-    setMounted(true);
-
-    // Delay to ensure refs are set, then update with the correct section
-    const timer = setTimeout(() => {
-      updateUnderline(initialSection);
-    }, 100);
-
-    window.addEventListener("resize", () => updateUnderline());
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", () => updateUnderline());
-    };
+    const navRect = nav.getBoundingClientRect();
+    const labelRect = label.getBoundingClientRect();
+    const width = labelRect.width * 4;
+    setUnderline({ x: labelRect.right - navRect.left - width, width });
   }, []);
 
-  // Scroll detection for active section
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["#home", "#about", "#projects", "#contact"];
-      const scrollPos = window.scrollY + 100;
+  const handleClick = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    isAutoScrolling.current = true;
+    setActiveSection(href);
+    smoothScrollTo(href, {
+      onComplete: () => {
+        isAutoScrolling.current = false;
+      },
+    });
+  };
 
-      for (const sectionId of sections) {
-        const el = document.querySelector(sectionId) as HTMLElement;
-        if (el) {
-          if (
-            scrollPos >= el.offsetTop &&
-            scrollPos < el.offsetTop + el.offsetHeight
-          ) {
-            setActiveSection(sectionId);
-            break;
-          }
+  // Move the underline whenever the active section changes
+  useLayoutEffect(() => {
+    measure(activeSection);
+  }, [activeSection, measure]);
+
+  // Initial section from the URL; enable the transition only after the first
+  // placement so the underline doesn't slide in from 0 on load
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (SECTIONS.includes(hash)) setActiveSection(hash);
+    const frame = requestAnimationFrame(() => setAnimate(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  // Keep the underline aligned on resize / font load
+  useEffect(() => {
+    const handleResize = () => measure(activeSection);
+    window.addEventListener("resize", handleResize);
+    document.fonts?.ready.then(handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [activeSection, measure]);
+
+  // Scroll spy (paused during nav-click scrolls)
+  useEffect(() => {
+    let frame: number | null = null;
+
+    const update = () => {
+      frame = null;
+      if (isAutoScrolling.current) return;
+
+      const scrollPos = window.scrollY + SPY_OFFSET;
+      for (const id of SECTIONS) {
+        const el = document.querySelector<HTMLElement>(id);
+        if (el && scrollPos >= el.offsetTop && scrollPos < el.offsetTop + el.offsetHeight) {
+          setActiveSection(id);
+          break;
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // At most one check per frame
+    const handleScroll = () => {
+      frame ??= requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -117,7 +115,7 @@ export function Navigation({ className = "" }: NavigationProps) {
               ref={setLinkRef(item.href)}
               href={item.href}
               onClick={handleClick(item.href)}
-              className={`relative text-sm transition-colors ${
+              className={`relative text-sm transition-colors duration-300 ${
                 activeSection === item.href
                   ? "text-black font-medium"
                   : "text-gray-400 hover:text-gray-600"
@@ -131,15 +129,14 @@ export function Navigation({ className = "" }: NavigationProps) {
         {/* Background track line */}
         <NavLine variant="track" />
 
-        {/* Sliding underline */}
+        {/* Sliding underline (GPU transform instead of animating `left`) */}
         <NavLine
           variant="active"
+          className="left-0 will-change-transform motion-reduce:transition-none!"
           style={{
-            left: underlineStyle.left,
-            width: underlineStyle.width,
-            transition: mounted
-              ? "left 0.3s ease-out, width 0.3s ease-out"
-              : "none",
+            width: underline.width,
+            transform: `translateX(${underline.x}px)`,
+            transition: animate ? UNDERLINE_TRANSITION : "none",
           }}
         />
       </ul>
