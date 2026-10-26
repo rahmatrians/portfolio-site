@@ -16,6 +16,10 @@ const SPY_OFFSET = 100;
 // Underline glide: long, soft deceleration
 const UNDERLINE_TRANSITION =
   "transform 600ms cubic-bezier(0.22, 1, 0.36, 1), width 600ms cubic-bezier(0.22, 1, 0.36, 1)";
+// The first menu's underline is 4x its label; menus further right are wider
+// by these amounts (relative to that base width). Moving left reverses it.
+const BASE_WIDTH_MULTIPLIER = 4;
+const WIDTH_GROWTH = [0, 0.1, 0.25, 0.6];
 
 export function Navigation({ className = "" }: NavigationProps) {
   const [activeSection, setActiveSection] = useState("#home");
@@ -31,15 +35,20 @@ export function Navigation({ className = "" }: NavigationProps) {
     if (el) linksRef.current.set(href, el);
   };
 
-  // Underline is right-aligned to the label and 4x its width
+  // Underline is right-aligned to the active label; its width follows
+  // WIDTH_GROWTH by menu position (last value reused for any extra menus)
   const measure = useCallback((section: string) => {
     const label = linksRef.current.get(section)?.querySelector("span");
+    const firstLabel = linksRef.current.get(SECTIONS[0])?.querySelector("span");
     const nav = navRef.current;
-    if (!label || !nav) return;
+    if (!label || !firstLabel || !nav) return;
 
     const navRect = nav.getBoundingClientRect();
     const labelRect = label.getBoundingClientRect();
-    const width = labelRect.width * 4;
+    const baseWidth = firstLabel.getBoundingClientRect().width * BASE_WIDTH_MULTIPLIER;
+    const index = Math.max(SECTIONS.indexOf(section), 0);
+    const growth = WIDTH_GROWTH[Math.min(index, WIDTH_GROWTH.length - 1)];
+    const width = baseWidth * (1 + growth);
     setUnderline({ x: labelRect.right - navRect.left - width, width });
   }, []);
 
