@@ -40,7 +40,14 @@ const buttonVariants = cva(
     compoundVariants: [
       // The waves are the hover feedback; keep the base colours steady so the
       // `difference` blend inverts cleanly
-      { variant: "default", liquid: true, class: "hover:bg-primary" },
+      // Solid: pure black base so the white wave inverts to pure white (and
+      // the label to pure black). The black border is invisible on black and
+      // shows up as the button's outline while the white wave covers it.
+      {
+        variant: "default",
+        liquid: true,
+        class: "border border-black bg-black text-white hover:bg-black",
+      },
       {
         variant: "outline",
         liquid: true,
