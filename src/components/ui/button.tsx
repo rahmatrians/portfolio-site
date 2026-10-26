@@ -1,7 +1,8 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
+import { Slot, Slottable } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
+import { LiquidWave } from "@/components/atoms/LiquidWave"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
@@ -28,10 +29,28 @@ const buttonVariants = cva(
         "icon-sm": "size-8",
         "icon-lg": "size-10",
       },
+      // Liquid dual-wave hover + elastic click compress (see atoms/LiquidWave).
+      // isolate/overflow-hidden contain the blend layer to the button;
+      // press squashes fast, release springs back with overshoot.
+      liquid: {
+        true: "relative isolate overflow-hidden transition-[scale,color,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.34,1.8,0.64,1)] active:scale-x-92 active:scale-y-84 active:duration-100 active:ease-out",
+        false: "",
+      },
     },
+    compoundVariants: [
+      // The waves are the hover feedback; keep the base colours steady so the
+      // `difference` blend inverts cleanly
+      { variant: "default", liquid: true, class: "hover:bg-primary" },
+      {
+        variant: "outline",
+        liquid: true,
+        class: "hover:bg-background hover:text-foreground",
+      },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
+      liquid: true,
     },
   }
 )
@@ -40,7 +59,9 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  liquid = true,
   asChild = false,
+  children,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
@@ -53,9 +74,14 @@ function Button({
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, liquid, className }))}
       {...props}
-    />
+    >
+      {/* Slottable: with asChild, the child element becomes the host and the
+          wave layer is appended inside it, after the label */}
+      <Slottable>{children}</Slottable>
+      {liquid && <LiquidWave />}
+    </Comp>
   )
 }
 

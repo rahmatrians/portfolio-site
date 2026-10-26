@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import { LiquidFilter } from "@/components/atoms/LiquidFilter";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -78,6 +79,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
+        {/* Global goo filter for every button's liquid wave */}
+        <LiquidFilter />
         {children}
       </body>
     </html>
