@@ -25,6 +25,12 @@ export const siteConfig = {
   // Personal Info
   name: "Rahmat Riansyah",
   role: "Software Engineer",
+  // Rotating text shown after the role in the hero, one at a time
+  roleExtras: [
+    ", also Graphic Designer",
+    ", that love playing Games",
+    ", and IoT Enthusiast",
+  ],
   greeting: "Hello, I'm",
 
   // Navigation

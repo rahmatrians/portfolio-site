@@ -1,4 +1,5 @@
 import { LinkButton } from "@/components/atoms/LinkButton";
+import { RotatingText } from "@/components/atoms/RotatingText";
 import { siteConfig } from "@/config/site";
 
 interface HeroContentProps {
@@ -16,7 +17,11 @@ export function HeroContent({ className = "" }: HeroContentProps) {
                     {siteConfig.name}
                 </h1>
                 <p className="text-lg md:text-2xl font-bold my-6 text-gray-400">
-                    a {siteConfig.role}
+                    a {siteConfig.role}{" "}
+                    <RotatingText
+                        items={siteConfig.roleExtras}
+                        className="font-light italic text-gray-300"
+                    />
                 </p>
             </div>
 

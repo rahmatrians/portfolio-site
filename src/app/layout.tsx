@@ -18,7 +18,9 @@ const geistMono = Geist_Mono({
 const poppins = Poppins({
   variable: "--font-poppins-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  // 300 + italic: hero's rotating role text ("also Graphic Designer")
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 // SEO Metadata
